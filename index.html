@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Video Edukasi Interaktif Agama</title>
+<style>
+    :root{
+        --primary:#007bff;
+        --accent1:#00c6ff;
+        --accent2:#0072ff;
+        --glass-bg: rgba(0,0,0,0.38);
+        --card-bg: rgba(255,255,255,0.98);
+    }
+
+    html,body{
+        height:100%;
+        margin:0;
+        font-family: Arial, sans-serif;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240402/pngtree-back-to-school-theme-on-education-image_15647801.jpg');
+        background-repeat: repeat;
+        background-position: center top;
+        background-size: 500px 500px;
+        background-attachment: fixed;
+        color:#111;
+        text-align:center;
+    }
+
+    /* progress bar */
+    #progress-bar{
+        position:fixed;
+        top:0;
+        left:0;
+        height:5px;
+        width:0%;
+        background: linear-gradient(90deg,var(--accent1),var(--accent2));
+        z-index:1200;
+        transition: width 0.2s linear;
+    }
+
+    .page {
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:flex-start;
+        padding:20px 16px 40px 16px;
+        box-sizing:border-box;
+    }
+
+    h2.site-title{
+        color: #fff;
+        font-size: clamp(18px, 3.2vw, 30px);
+        font-weight:700;
+        margin:18px 0;
+        padding:10px 18px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display:inline-block;
+        border-radius:10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+        animation: fadeZoom 1s ease both;
+    }
+
+    @keyframes fadeZoom {
+        from { opacity:0; transform: translateY(-6px) scale(.98); }
+        to   { opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    /* small card container for form & choices */
+    .card {
+        width: min(560px, 94vw);
+        background: var(--card-bg);
+        border-radius:12px;
+        padding:18px;
+        box-sizing:border-box;
+        margin: 12px auto;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.06);
+        text-align:left;
+    }
+
+    label { display:block; margin:8px 0 6px; font-weight:600; }
+    input[type="text"], select {
+        width:100%;
+        padding:10px 12px;
+        border-radius:8px;
+        border:1px solid #ccc;
+        box-sizing:border-box;
+        font-size:15px;
+    }
+
+    .row { display:flex; gap:10px; }
+    .row .col { flex:1; }
+
+    .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+
+    button {
+        padding:10px 14px;
+        font-size:14px;
+        border-radius:8px;
+        border: none;
+        cursor:pointer;
+        background: var(--primary);
+        color:#fff;
+        box-shadow: 0 6px 18px rgba(0,123,255,0.12);
+        transition: transform .12s ease, box-shadow .12s ease;
+    }
+    button:active { transform: translateY(1px) scale(.998); }
+    button:hover { box-shadow: 0 10px 28px rgba(0,123,255,0.18); }
+
+    .muted { color:#0f0505; font-size:13px; }
+
+    /* religion grid */
+    .religions {
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:10px;
+        margin-top:10px;
+    }
+    .religion-btn {
+        padding:12px;
+        border-radius:10px;
+        border:1px solid rgba(0,0,0,0.06);
+        background:#0b0303;
+        color:#fff;
+        font-weight:700;
+        cursor:pointer;
+        text-align:center;
+        line-height:1.1;
+    }
+    .religion-btn:hover { transform: translateY(-3px); transition: all .12s ease; }
+
+    /* improve the choose heading contrast */
+    .choose-header {
+        color: #0b2545; /* darker for contrast */
+        font-size: 18px;
+        font-weight:800;
+        margin-bottom:6px;
+    }
+    .choose-sub { color: #12366b; font-size:14px; margin-bottom:8px; }
+
+    /* religion detail page */
+    .religion-detail {
+        max-width:720px;
+        margin: 8px auto;
+        background: var(--card-bg);
+        border-radius:12px;
+        padding:12px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        border:1px solid rgba(0,0,0,0.05);
+        text-align:left;
+    }
+    .religion-image {
+        width:100%;
+        height:280px;
+        object-fit:cover;
+        border-radius:10px;
+        display:block;
+        margin-bottom:12px;
+        background: linear-gradient(180deg,#e9eef8,#f7f9ff);
+    }
+    .religion-title { font-size:20px; font-weight:900; color:#0b2545; margin-bottom:6px; }
+    .religion-text { color:#222; font-size:15px; line-height:1.5; }
+
+    /* video container responsive (from original) */
+    .video-container{
+        position:relative;
+        width: min(420px, 92vw);
+        aspect-ratio: 9 / 16;
+        max-width: 420px;
+        margin: 10px auto;
+        background: #000;
+        border-radius: 12px;
+        overflow:hidden;
+        border:2px solid rgba(0,0,0,0.6);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    }
+    .video-container video{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+    }
+
+    /* watermark logo (NEW) */
+    #watermark-logo {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        width: clamp(60px, 15vw, 80px); /* Responsive sizing */
+        height: auto;
+        opacity: 0.6;
+        z-index: 1000;
+    }
+
+    /* dark overlay behind modal */
+    #overlay{
+        position:fixed;
+        inset:0;
+        background: rgba(0,0,0,0.34);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index:1100;
+        display:none;
+    }
+
+    /* popup question & score (same as original) */
+    .modal {
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        width: clamp(260px, 86%, 420px);
+        max-height: calc(100vh - 80px);
+        overflow:auto;
+        background: rgba(255,255,255,0.96);
+        border-radius: 12px;
+        padding: 16px;
+        box-sizing:border-box;
+        border: 2px solid rgba(0,0,0,0.18);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        z-index: 1150;
+        display:none;
+        text-align:center;
+    }
+
+    .modal h3 { margin: 6px 0 12px 0; font-size: clamp(16px, 2.6vw, 20px); }
+    #q-buttons {
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap:10px;
+        margin-top:6px;
+    }
+
+    .correct { background:#28a745 !important; box-shadow: 0 8px 22px rgba(40,167,69,0.18) !important; }
+    .wrong   { background:#dc3545 !important; box-shadow: 0 8px 22px rgba(220,53,69,0.18) !important; }
+
+    #answer-feedback{ margin-top:10px; font-weight:700; display:none; font-size:16px; }
+
+    #score-box h2 { margin:0 0 8px 0; font-size:20px; }
+    #score-box p { margin:0 0 12px 0; font-weight:600; }
+
+    /* admin panel styles */
+    #step-admin {
+        width: min(720px, 94vw);
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 18px;
+        box-sizing: border-box;
+        margin: 12px auto;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.06);
+        text-align: left;
+    }
+
+    #step-admin h3 {
+        text-align:center;
+    }
+
+    .admin-student-list {
+        list-style-type: none;
+        padding:0;
+        margin:12px 0 0;
+    }
+
+    .admin-student-list li {
+        background: #f7f7f7;
+        padding:12px;
+        border-radius:8px;
+        margin-bottom:8px;
+        border:1px solid #eee;
+    }
+
+    .admin-student-list li span {
+        display:block;
+        font-size:14px;
+        color:#555;
+    }
+
+    .admin-student-list li strong {
+        font-size:16px;
+        color:#222;
+    }
+
+    /* footer styles (NEW) */
+    footer {
+        width:100%;
+        padding:20px 16px;
+        background: rgba(0,0,0,0.25);
+        color:#fff;
+        text-align:center;
+        margin-top:auto;
+        font-size:14px;
+        box-shadow: inset 0 10px 20px rgba(0,0,0,0.08);
+    }
+    
+    /* responsive adjustments (mobile) */
+    @media (max-width:720px){
+        body { background-attachment: scroll; background-size: 380px 380px; }
+        #q-buttons { grid-template-columns: repeat(1, 1fr); }
+        button { font-size:16px; padding:12px; min-height:48px; }
+        .modal { padding:14px; }
+        .religions { grid-template-columns: repeat(2,1fr); }
+        .religion-image { height:200px; }
+    }
+
+    @media (max-width:420px){
+        .video-container { border-radius:10px; }
+        h2.site-title { padding:8px 12px; font-size:18px; }
+        .religions { grid-template-columns: repeat(1,1fr); }
+        .religion-image { height:160px; }
+    }
+
+    body.locked { overflow:hidden; touch-action:none; }
+    .top-summary { margin:12px 0; font-weight:700; }
+    .small-btn { background:#6c757d; color:#fff; border: none; padding:8px 10px; border-radius:8px; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="page">
+    <h2 class="site-title">Video Edukasi Interaktif Agama</h2>
+
+    <div id="step-form" class="card" aria-hidden="false">
+        <h3>Masukkan Identitas</h3>
+        <p class="muted">Isi nama dan kelas kamu untuk memulai pembelajaran.</p>
+        <div id="revisit-message" style="display:none; color:#dc3545; font-weight:600; margin-bottom:12px;"></div>
+
+        <label for="input-name">Nama</label>
+        <input id="input-name" type="text" placeholder="Contoh: Siti Nuraini" />
+
+        <label for="input-class">Kelas</label>
+        <input id="input-class" type="text" placeholder="Contoh: 7A / 8B" />
+
+        <div class="actions">
+            <button id="to-choose">Mulai</button>
+        </div>
+    </div>
+
+    <div id="step-choose" class="card" style="display:none;" aria-hidden="true">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <div class="choose-header">Pilih Pembelajaran</div>
+                <div class="choose-sub" id="choose-desc">Pilih salah satu dari 5 agama untuk melihat penjelasan singkatnya.</div>
+            </div>
+            <div>
+                <button id="back-to-form" class="small-btn">Kembali</button>
+            </div>
+        </div>
+
+        <div style="margin-top:8px;">
+            <div class="top-summary" id="student-summary">Hai, —</div>
+            <div class="religions" role="list">
+                <button class="religion-btn" data-religion="Islam">Islam</button>
+                <button class="religion-btn" data-religion="Kristen">Kristen</button>
+                <button class="religion-btn" data-religion="Konghucu">Konghucu</button>
+                <button class="religion-btn" data-religion="Hindu">Hindu</button>
+                <button class="religion-btn" data-religion="Buddha">Buddha</button>
+            </div>
+        </div>
+        <button id="start-learning-btn" style="display:none; margin-top:12px;">Mulai Belajar!</button>
+    </div>
+
+    <div id="step-religion" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; max-width:720px; margin:12px auto 6px;">
+            <div style="text-align:left;">
+                <div id="header-info" class="muted">Nama • Kelas • Agama</div>
+                <div id="welcome-line" style="font-weight:800; font-size:18px;">Deskripsi Agama</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button id="back-to-choose" class="small-btn">Pilih Lain</button>
+            </div>
+        </div>
+
+        <div class="religion-detail" aria-live="polite">
+            <img id="religion-image" class="religion-image" src="" alt="Gambar agama" />
+            <div class="religion-title" id="religion-title">Judul Agama</div>
+            <div class="religion-text" id="religion-desc">Penjelasan singkat agama akan muncul di sini.</div>
+        </div>
+    </div>
+
+    <div id="step-player" style="display:none; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; max-width:720px; margin:0 auto 8px;">
+            <div style="text-align:left;">
+                <div id="header-info-player" class="muted">Nama • Kelas • Agama</div>
+                <div id="welcome-line-player" style="font-weight:800; font-size:18px;">Selamat belajar!</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button id="back-to-choose-player" class="small-btn">Pilih Lain</button>
+            </div>
+        </div>
+
+        <div class="video-container" aria-hidden="false">
+            <img id="watermark-logo" src="https://siaunhar.harapan.ac.id/files/img/logo/logo.png?v=1" alt="Universitas Harapan Medan logo" />
+            <video id="myVideo" playsinline controls preload="metadata">
+                <source src="Skripsu(1).mp4" type="video/mp4">
+                Browser kamu tidak mendukung video.
+            </video>
+
+            <div id="overlay" aria-hidden="true"></div>
+
+            <div id="question-box" class="modal" role="dialog" aria-modal="true" aria-labelledby="q-text" tabindex="-1">
+                <h3 id="q-text">Pertanyaan muncul di sini</h3>
+                <div id="q-buttons" aria-live="polite"></div>
+                <div id="answer-feedback" role="status"></div>
+            </div>
+
+            <div id="score-box" class="modal" role="dialog" aria-modal="true" tabindex="-1">
+                <h2>🎯 Nilai Akhir</h2>
+                <p id="final-score">Nilai kamu: 0</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="step-admin" style="display:none;" aria-hidden="true">
+        <div style="display:flex; justify-content:space-between; align-items:center; max-width:720px; margin:12px auto 6px;">
+            <h3 style="text-align:left; margin:0;">Panel Admin</h3>
+            <button id="back-to-form-admin" class="small-btn">Kembali</button>
+        </div>
+        <div class="card" style="text-align:left;">
+            <h4>Daftar Siswa yang Sudah Selesai</h4>
+            <p id="no-students-message" style="display:none;">Belum ada siswa yang menyelesaikan pembelajaran.</p>
+            <ul id="student-list" class="admin-student-list">
+                </ul>
+        </div>
+    </div>
+
+</div>
+
+<audio id="sound-pop" src="POP.mp3" preload="auto"></audio>
+<audio id="sound-correct" src="CORRECT.mp3" preload="auto"></audio>
+<audio id="sound-wrong" src="WRONG.mp3" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+/* ====== NAV & FORM HANDLING ====== */
+const stepForm = document.getElementById('step-form');
+const stepChoose = document.getElementById('step-choose');
+const stepReligion = document.getElementById('step-religion');
+const stepPlayer = document.getElementById('step-player');
+const stepAdmin = document.getElementById('step-admin'); // Tambahkan elemen admin panel
+
+const inputName = document.getElementById('input-name');
+const inputClass = document.getElementById('input-class');
+const toChooseBtn = document.getElementById('to-choose');
+const backToFormBtn = document.getElementById('back-to-form');
+const backToChooseBtn = document.getElementById('back-to-choose');
+const startLearningBtn = document.getElementById('start-learning-btn');
+const studentSummary = document.getElementById('student-summary');
+const revisitMessage = document.getElementById('revisit-message');
+const backToFormAdminBtn = document.getElementById('back-to-form-admin'); // Tombol kembali di admin panel
+
+const headerInfo = document.getElementById('header-info');
+const welcomeLine = document.getElementById('welcome-line');
+
+const religionImage = document.getElementById('religion-image');
+const religionTitle = document.getElementById('religion-title');
+const religionDesc = document.getElementById('religion-desc');
+
+let student = { name:'', kelas:'', agama:'' };
+let visitedReligions = [];
+
+/* show a step and hide others */
+function showStep(stepId){
+    // hide all
+    stepForm.style.display = 'none';
+    stepChoose.style.display = 'none';
+    stepReligion.style.display = 'none';
+    stepPlayer.style.display = 'none';
+    stepAdmin.style.display = 'none'; // Tambahkan admin panel
+
+    // show requested
+    if(stepId === 'form') stepForm.style.display = 'block';
+    if(stepId === 'choose') stepChoose.style.display = 'block';
+    if(stepId === 'religion') stepReligion.style.display = 'block';
+    if(stepId === 'player') stepPlayer.style.display = 'block';
+    if(stepId === 'admin') stepAdmin.style.display = 'block'; // Tambahkan admin panel
+
+    // manage aria-hidden
+    stepForm.setAttribute('aria-hidden', stepId==='form' ? 'false' : 'true');
+    stepChoose.setAttribute('aria-hidden', stepId==='choose' ? 'false' : 'true');
+    stepReligion.setAttribute('aria-hidden', stepId==='religion' ? 'false' : 'true');
+    stepPlayer.setAttribute('aria-hidden', stepId==='player' ? 'false' : 'true');
+    stepAdmin.setAttribute('aria-hidden', stepId==='admin' ? 'false' : 'true'); // Tambahkan admin panel
+}
+
+/* validate form and go to choose */
+toChooseBtn.addEventListener('click', ()=> {
+    const nameInput = inputName.value.trim();
+    const classInput = inputClass.value.trim();
+    const nameKey = nameInput.toLowerCase().replace(/\s/g, '');
+    const classKey = classInput.toLowerCase().replace(/\s/g, '');
+
+    if(!nameInput || !classInput){
+        alert('Isi nama dan kelas terlebih dahulu.');
+        return;
+    }
+
+    // Cek login admin
+    if(nameKey === 'admin' && classKey === 'admin'){
+        showStep('admin');
+        renderAdminPanel();
+        return;
+    }
+
+    // Cek apakah siswa sudah pernah ikut
+    const storageKey = `completed-${nameKey}-${classKey}`;
+    const storedData = localStorage.getItem(storageKey);
+
+    if(storedData){
+        const data = JSON.parse(storedData);
+        revisitMessage.textContent = `Kamu sudah pernah mengikuti pembelajaran ini pada tanggal ${new Date(data.tanggal).toLocaleDateString()} dengan nilai ${data.nilai}.`;
+        revisitMessage.style.display = 'block';
+        return; // Hentikan proses jika sudah pernah ikut
+    }
+
+    student.name = nameInput;
+    student.kelas = classInput;
+    revisitMessage.style.display = 'none'; // Sembunyikan pesan jika belum pernah ikut
+    studentSummary.textContent = `Hai, ${student.name} — Kelas ${student.kelas}`;
+    showStep('choose');
+});
+
+
+/* back to form */
+backToFormBtn.addEventListener('click', ()=> {
+    showStep('form');
+});
+
+/* back from religion to choose */
+backToChooseBtn.addEventListener('click', ()=> {
+    showStep('choose');
+});
+
+/* also bind the small back buttons on player header (they're separate elements) */
+document.getElementById('back-to-choose-player').addEventListener('click', ()=> showStep('choose'));
+backToFormAdminBtn.addEventListener('click', ()=> showStep('form')); // Tombol kembali di admin panel
+
+/* religion selection logic */
+document.querySelectorAll('.religion-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const r = e.currentTarget.dataset.religion;
+        student.agama = r;
+
+        // kalau belum pernah dikunjungi, masukkan ke visitedReligions
+        if (!visitedReligions.includes(r)) {
+            visitedReligions.push(r);
+        }
+
+        // cek apakah semua agama sudah dikunjungi
+        if (visitedReligions.length >= 5) { // Menggunakan >= 5 untuk berjaga-jaga
+            startLearningBtn.style.display = "block"; // tampilkan tombol
+        } else {
+            startLearningBtn.style.display = "none";
+        }
+
+        // update detail agama
+        headerInfo.textContent = `${student.name} • Kelas ${student.kelas} • ${student.agama}`;
+        welcomeLine.textContent = `Pembelajaran: ${student.agama}`;
+
+        if(r === 'Islam'){
+            religionImage.src = 'https://images.unsplash.com/photo-1505765057903-8f3340d2a6d6?auto=format&fit=crop&w=1200&q=60';
+            religionImage.alt = 'Masjid';
+            religionTitle.textContent = 'Islam';
+            religionDesc.textContent = 'Islam adalah agama yang beriman kepada Allah SWT dan mengikuti ajaran Nabi Muhammad SAW. Nilai-nilai utama meliputi tauhid, shalat, zakat, puasa, dan haji bagi yang mampu.';
+        } else if(r === 'Kristen'){
+            religionImage.src = 'https://images.unsplash.com/photo-1529006557815-6c13f0d2819b?auto=format&fit=crop&w=1200&q=60';
+            religionImage.alt = 'Gereja';
+            religionTitle.textContent = 'Kristen';
+            religionDesc.textContent = 'Kristen berfokus pada ajaran Yesus Kristus, mengajarkan kasih, pengampunan, dan keselamatan melalui iman kepada Kristus. Peribadatan biasanya dilakukan di gereja.';
+        } else if(r === 'Konghucu'){
+            religionImage.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60';
+            religionImage.alt = 'Kelenteng Konghucu';
+            religionTitle.textContent = 'Konghucu';
+            religionDesc.textContent = 'Konghucu adalah agama yang berlandaskan ajaran Nabi Kongzi (Confucius), menekankan kebajikan, kesopanan, dan hubungan harmonis antar manusia. ';
+        } else if(r === 'Hindu'){
+            religionImage.src = 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1200&q=60';
+            religionImage.alt = 'Kuil Hindu';
+            religionTitle.textContent = 'Hindu';
+            religionDesc.textContent = 'Hindu adalah tradisi yang sangat beragam yang meliputi kepercayaan pada banyak dewa, konsep dharma (kewajiban), karma (akibat perbuatan), dan siklus reinkarnasi.';
+        } else if(r === 'Buddha'){
+            religionImage.src = 'https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1200&q=60';
+            religionImage.alt = 'Vihara / Patung Buddha';
+            religionTitle.textContent = 'Buddha';
+            religionDesc.textContent = 'Buddhisme berfokus pada ajaran Sang Buddha tentang mengatasi penderitaan melalui pencerahan (nirwana), dengan praktik meditasi dan kehidupan etis.';
+        } else {
+            religionImage.src = '';
+            religionImage.alt = 'Gambar agama';
+            religionTitle.textContent = r;
+            religionDesc.textContent = 'Penjelasan belum tersedia.';
+        }
+
+        showStep('religion');
+    });
+});
+
+/* Tombol "Mulai Belajar!" yang diperbaiki */
+startLearningBtn.addEventListener('click', () => {
+    // Memastikan semua agama sudah dikunjungi sebelum memulai video
+    if (visitedReligions.length >= 5) {
+        showStep('player');
+        initVideoInteractions();
+        // Update header info di halaman player
+        document.getElementById('header-info-player').textContent = `${student.name} • Kelas ${student.kelas} • ${student.agama}`;
+    } else {
+        alert("Kamu harus melihat deskripsi dari semua agama terlebih dahulu!");
+    }
+});
+
+/* ====== ADMIN PANEL LOGIC (NEW) ====== */
+const studentListEl = document.getElementById('student-list');
+const noStudentsMessage = document.getElementById('no-students-message');
+
+function renderAdminPanel(){
+    studentListEl.innerHTML = '';
+    const students = [];
+
+    // Loop through localStorage to find students
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('completed-')) {
+            try {
+                const data = JSON.parse(localStorage.getItem(key));
+                students.push(data);
+            } catch (e) {
+                console.error("Failed to parse localStorage data for key:", key, e);
+            }
+        }
+    }
+
+    if(students.length === 0){
+        noStudentsMessage.style.display = 'block';
+    } else {
+        noStudentsMessage.style.display = 'none';
+        students.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)); // Sort by date, newest first
+        students.forEach(s => {
+            const li = document.createElement('li');
+            const formattedDate = new Date(s.tanggal).toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            li.innerHTML = `
+                <strong>${s.nama} (${s.kelas})</strong>
+                <span>Agama: ${s.agama} | Nilai: ${s.nilai}</span>
+                <span>Selesai pada: ${formattedDate}</span>
+            `;
+            studentListEl.appendChild(li);
+        });
+    }
+}
+
+/* initialize on load */
+showStep('form');
+
+
+/* ====== ORIGINAL VIDEO & INTERACTIVE QUESTION LOGIC ====== */
+/* ====== ELEMENTS ====== */
+const video = document.getElementById('myVideo');
+const questionBox = document.getElementById('question-box');
+const qText = document.getElementById('q-text');
+const qButtons = document.getElementById('q-buttons');
+const scoreBox = document.getElementById('score-box');
+const finalScore = document.getElementById('final-score');
+const overlay = document.getElementById('overlay');
+
+const soundPop = document.getElementById('sound-pop');
+const soundCorrect = document.getElementById('sound-correct');
+const soundWrong = document.getElementById('sound-wrong');
+
+let score = 0;
+const POINTS = 10;
+let isQuestionActive = false;
+let shownQuestions = new Set();
+
+/* ====== QUESTIONS (sesuaikan waktu detik) ====== */
+let questions = [
+    { time:15, text: "Hari ini kita belajar tentang?", answers:[
+        {text:"Toleransi", correct:true},
+        {text:"Main", correct:false},
+        {text:"Masak", correct:false}
+    ]},
+    { time:27, text: "Andi beragama apa?", answers:[
+        {text:"Islam", correct:true},
+        {text:"Kristen", correct:false},
+        {text:"Budda", correct:false}
+    ]},
+    { time:32, text: "Lala beragama apa?", answers:[
+        {text:"Islam", correct:false},
+        {text:"Kristen", correct:false},
+        {text:"Konghucu", correct:true}
+    ]},
+    { time:37, text: "Josep beragama apa?", answers:[
+        {text:"Islam", correct:false},
+        {text:"Kristen", correct:true},
+        {text:"Konghucu", correct:false}
+    ]},
+    { time:42, text: "Matthew beragama apa?", answers:[
+        {text:"Hindu", correct:false},
+        {text:"Buddha", correct:true},
+        {text:"Konghucu", correct:false}
+    ]},
+    { time:48, text: "Alex beragama apa ?", answers:[
+        {text:"Hindu", correct:true},
+        {text:"Buddha", correct:false},
+        {text:"Konghucu", correct:false}
+    ]}
+];
+
+/* ====== HELPERS ====== */
+function showOverlay(show=true){
+    overlay.style.display = show ? 'block' : 'none';
+    overlay.setAttribute('aria-hidden', show ? 'false' : 'true');
+}
+
+function lockPage(lock=true){
+    document.body.classList.toggle('locked', lock);
+}
+
+/* play sound safely (catch promise rejections on mobile autoplay rules) */
+function safePlay(audioEl){
+    if(!audioEl) return;
+    try{
+        const p = audioEl.play();
+        if(p && p.catch) p.catch(()=>{/* ignore autoplay block */});
+    }catch(e){}
+}
+
+/* confetti */
+function confettiEffect(){
+    try{
+        confetti({ particleCount: 90, spread: 65, origin: { y: 0.6 } });
+    }catch(e){}
+}
+
+/* ====== VIDEO & PROGRESSBAR ====== */
+const progressBar = document.getElementById('progress-bar');
+
+function initVideoInteractions(){
+    // Reset state when entering the player
+    score = 0;
+    shownQuestions.clear();
+    isQuestionActive = false;
+    // ensure progress bar reset
+    progressBar.style.width = '0%';
+
+    // ensure controls visible
+    video.setAttribute('controls','true');
+    try { video.currentTime = 0; } catch(e) {}
+
+    // Add listeners (check if they already exist to avoid duplicates)
+    video.removeEventListener('timeupdate', videoTimeUpdateHandler);
+    video.removeEventListener('seeking', videoSeekingHandler);
+    video.removeEventListener('ended', showFinalScore);
+    
+    video.addEventListener('timeupdate', videoTimeUpdateHandler);
+    video.addEventListener('seeking', videoSeekingHandler);
+    video.addEventListener('ended', showFinalScore);
+
+    // try to autoplay (may be blocked on mobile)
+    try{ video.play().catch(()=>{}); }catch(e){}
+}
+
+/* time update handler (separate function for reattach) */
+function videoTimeUpdateHandler(){
+    if(video.duration){
+        const percent = (video.currentTime / video.duration) * 100;
+        progressBar.style.width = percent + '%';
+    }
+    const currentSec = Math.floor(video.currentTime);
+    questions.forEach(q => {
+        if(!shownQuestions.has(q.time) && currentSec === q.time){
+            shownQuestions.add(q.time);
+            setTimeout(()=> showQuestion(q), 80);
+        }
+    });
+}
+
+/* seeking handler */
+function videoSeekingHandler(e){
+    if(isQuestionActive){
+        e.preventDefault();
+        if(video.dataset.lockTime) video.currentTime = Number(video.dataset.lockTime);
+    }
+}
+
+/* ====== SHOW / HIDE QUESTION ====== */
+function showQuestion(q){
+    isQuestionActive = true;
+    video.pause();
+    video.removeAttribute('controls');
+    video.dataset.lockTime = q.time;
+
+    qText.textContent = q.text;
+    qButtons.innerHTML = '';
+    document.getElementById('answer-feedback').style.display = 'none';
+
+    q.answers.forEach(ans => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = ans.text;
+        btn.onclick = () => checkAnswer(btn, ans.correct);
+        qButtons.appendChild(btn);
+    });
+
+    showOverlay(true);
+    questionBox.style.display = 'block';
+    questionBox.focus && questionBox.focus();
+    questionBox.scrollTop = 0;
+
+    lockPage(true);
+    safePlay(soundPop);
+}
+
+/* ====== ANSWER CHECK ====== */
+function checkAnswer(button, isCorrect){
+    const feedbackEl = document.getElementById('answer-feedback');
+    Array.from(qButtons.querySelectorAll('button')).forEach(b => b.disabled = true);
+
+    if(isCorrect){
+        score += POINTS;
+        button.classList.add('correct');
+        safePlay(soundCorrect);
+        feedbackEl.textContent = 'Benar!';
+        feedbackEl.style.display = 'block';
+        confettiEffect();
+    } else {
+        button.classList.add('wrong');
+        safePlay(soundWrong);
+        feedbackEl.textContent = 'Salah!';
+        feedbackEl.style.display = 'block';
+    }
+
+    setTimeout(()=> {
+        questionBox.style.display = 'none';
+        showOverlay(false);
+        video.setAttribute('controls', 'true');
+        isQuestionActive = false;
+        lockPage(false);
+        try{ video.play().catch(()=>{}); }catch(e){}
+    }, 2200);
+}
+
+/* ====== FINAL SCORE & RESTART ====== */
+function showFinalScore(){
+    const finalScoreText = `${score} / ${questions.length * POINTS}`;
+    finalScore.textContent = `Nilai kamu: ${finalScoreText}`;
+    scoreBox.style.display = 'block';
+    showOverlay(true);
+    lockPage(true);
+
+    // Simpan data ke localStorage dengan kunci unik
+    const storageKey = `completed-${student.name.toLowerCase().replace(/\s/g, '')}-${student.kelas.toLowerCase().replace(/\s/g, '')}`;
+    const dataToStore = {
+        nama: student.name,
+        kelas: student.kelas,
+        agama: student.agama,
+        nilai: finalScoreText,
+        tanggal: new Date().toISOString()
+    };
+    localStorage.setItem(storageKey, JSON.stringify(dataToStore));
+
+    // Hapus tombol sebelumnya jika ada, lalu tambahkan tombol WhatsApp
+    scoreBox.innerHTML = `<h2>🎯 Nilai Akhir</h2><p id="final-score">Nilai kamu: ${finalScoreText}</p>`;
+    const kirimBtn = document.createElement('button');
+    kirimBtn.textContent = "Kirim ke Guru via WhatsApp";
+    kirimBtn.style.marginTop = '10px';
+    kirimBtn.addEventListener('click', () => {
+        const pesan = `Halo Bu/Pak Guru, saya ${student.name} (Kelas ${student.kelas}) telah menyelesaikan pembelajaran tentang ${student.agama} dengan nilai: ${finalScoreText}`;
+        const url = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`; // ganti nomor guru di sini
+        window.open(url, '_blank');
+    });
+    scoreBox.appendChild(kirimBtn);
+}
+
+
+/* Prevent accidental touch-scroll on overlay (small screens) */
+overlay.addEventListener('touchmove', function(e){ e.preventDefault(); }, { passive:false });
+
+/* accessibility: close modals on escape */
+document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+        if(questionBox.style.display === 'block'){
+            questionBox.style.display = 'none';
+            showOverlay(false);
+            video.setAttribute('controls','true');
+            isQuestionActive = false;
+            lockPage(false);
+            try{ video.play().catch(()=>{}); }catch(e){}
+        } else if(scoreBox.style.display === 'block'){
+            scoreBox.style.display = 'none';
+            showOverlay(false);
+            lockPage(false);
+        }
+    }
+});
+</script>
+</body>
+<footer>
+    <p>&#169; 2024 Universitas Harapan Medan. Hak Cipta Dilindungi.</p>
+</footer>
+</html>
