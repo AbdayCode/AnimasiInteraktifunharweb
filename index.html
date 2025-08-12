@@ -134,6 +134,13 @@
     }
     .religion-btn:hover { transform: translateY(-3px); transition: all .12s ease; }
 
+    /* NEW: visited button color */
+    .religion-btn.visited {
+        background: #28a745; /* Green color */
+        color: #fff;
+        border-color: #218838;
+    }
+
     /* improve the choose heading contrast */
     .choose-header {
         color: #0b2545; /* darker for contrast */
@@ -273,6 +280,21 @@
         border-radius:8px;
         margin-bottom:8px;
         border:1px solid #eee;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .admin-student-list li .info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .admin-student-list li .actions {
+        margin-top: 0;
+        flex-shrink: 0;
     }
 
     .admin-student-list li span {
@@ -284,6 +306,15 @@
     .admin-student-list li strong {
         font-size:16px;
         color:#222;
+    }
+
+    .reset-btn {
+        background: #dc3545;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
     }
 
     /* footer styles (NEW) */
@@ -399,7 +430,7 @@
         <div class="video-container" aria-hidden="false">
             <img id="watermark-logo" src="https://siaunhar.harapan.ac.id/files/img/logo/logo.png?v=1" alt="Universitas Harapan Medan logo" />
             <video id="myVideo" playsinline controls preload="metadata">
-                <source src="Skripsu(1).mp4" type="video/mp4">
+                <source src="SKRIPSU FINAL.mp4" type="video/mp4">
                 Browser kamu tidak mendukung video.
             </video>
 
@@ -445,7 +476,7 @@ const stepForm = document.getElementById('step-form');
 const stepChoose = document.getElementById('step-choose');
 const stepReligion = document.getElementById('step-religion');
 const stepPlayer = document.getElementById('step-player');
-const stepAdmin = document.getElementById('step-admin'); // Tambahkan elemen admin panel
+const stepAdmin = document.getElementById('step-admin');
 
 const inputName = document.getElementById('input-name');
 const inputClass = document.getElementById('input-class');
@@ -455,7 +486,7 @@ const backToChooseBtn = document.getElementById('back-to-choose');
 const startLearningBtn = document.getElementById('start-learning-btn');
 const studentSummary = document.getElementById('student-summary');
 const revisitMessage = document.getElementById('revisit-message');
-const backToFormAdminBtn = document.getElementById('back-to-form-admin'); // Tombol kembali di admin panel
+const backToFormAdminBtn = document.getElementById('back-to-form-admin');
 
 const headerInfo = document.getElementById('header-info');
 const welcomeLine = document.getElementById('welcome-line');
@@ -474,21 +505,21 @@ function showStep(stepId){
     stepChoose.style.display = 'none';
     stepReligion.style.display = 'none';
     stepPlayer.style.display = 'none';
-    stepAdmin.style.display = 'none'; // Tambahkan admin panel
+    stepAdmin.style.display = 'none';
 
     // show requested
     if(stepId === 'form') stepForm.style.display = 'block';
     if(stepId === 'choose') stepChoose.style.display = 'block';
     if(stepId === 'religion') stepReligion.style.display = 'block';
     if(stepId === 'player') stepPlayer.style.display = 'block';
-    if(stepId === 'admin') stepAdmin.style.display = 'block'; // Tambahkan admin panel
+    if(stepId === 'admin') stepAdmin.style.display = 'block';
 
     // manage aria-hidden
     stepForm.setAttribute('aria-hidden', stepId==='form' ? 'false' : 'true');
     stepChoose.setAttribute('aria-hidden', stepId==='choose' ? 'false' : 'true');
     stepReligion.setAttribute('aria-hidden', stepId==='religion' ? 'false' : 'true');
     stepPlayer.setAttribute('aria-hidden', stepId==='player' ? 'false' : 'true');
-    stepAdmin.setAttribute('aria-hidden', stepId==='admin' ? 'false' : 'true'); // Tambahkan admin panel
+    stepAdmin.setAttribute('aria-hidden', stepId==='admin' ? 'false' : 'true');
 }
 
 /* validate form and go to choose */
@@ -518,16 +549,15 @@ toChooseBtn.addEventListener('click', ()=> {
         const data = JSON.parse(storedData);
         revisitMessage.textContent = `Kamu sudah pernah mengikuti pembelajaran ini pada tanggal ${new Date(data.tanggal).toLocaleDateString()} dengan nilai ${data.nilai}.`;
         revisitMessage.style.display = 'block';
-        return; // Hentikan proses jika sudah pernah ikut
+        return;
     }
 
     student.name = nameInput;
     student.kelas = classInput;
-    revisitMessage.style.display = 'none'; // Sembunyikan pesan jika belum pernah ikut
+    revisitMessage.style.display = 'none';
     studentSummary.textContent = `Hai, ${student.name} — Kelas ${student.kelas}`;
     showStep('choose');
 });
-
 
 /* back to form */
 backToFormBtn.addEventListener('click', ()=> {
@@ -541,7 +571,7 @@ backToChooseBtn.addEventListener('click', ()=> {
 
 /* also bind the small back buttons on player header (they're separate elements) */
 document.getElementById('back-to-choose-player').addEventListener('click', ()=> showStep('choose'));
-backToFormAdminBtn.addEventListener('click', ()=> showStep('form')); // Tombol kembali di admin panel
+backToFormAdminBtn.addEventListener('click', ()=> showStep('form'));
 
 /* religion selection logic */
 document.querySelectorAll('.religion-btn').forEach(btn => {
@@ -554,9 +584,12 @@ document.querySelectorAll('.religion-btn').forEach(btn => {
             visitedReligions.push(r);
         }
 
+        // Tambahkan baris ini untuk menerapkan kelas "visited"
+        e.currentTarget.classList.add('visited');
+
         // cek apakah semua agama sudah dikunjungi
-        if (visitedReligions.length >= 5) { // Menggunakan >= 5 untuk berjaga-jaga
-            startLearningBtn.style.display = "block"; // tampilkan tombol
+        if (visitedReligions.length >= 5) {
+            startLearningBtn.style.display = "block";
         } else {
             startLearningBtn.style.display = "none";
         }
@@ -566,27 +599,27 @@ document.querySelectorAll('.religion-btn').forEach(btn => {
         welcomeLine.textContent = `Pembelajaran: ${student.agama}`;
 
         if(r === 'Islam'){
-            religionImage.src = 'https://images.unsplash.com/photo-1505765057903-8f3340d2a6d6?auto=format&fit=crop&w=1200&q=60';
+            religionImage.src = 'https://cnc-magazine.oramiland.com/parenting/images/masjid_di_medan.width-800.format-webp.webp';
             religionImage.alt = 'Masjid';
             religionTitle.textContent = 'Islam';
             religionDesc.textContent = 'Islam adalah agama yang beriman kepada Allah SWT dan mengikuti ajaran Nabi Muhammad SAW. Nilai-nilai utama meliputi tauhid, shalat, zakat, puasa, dan haji bagi yang mampu.';
         } else if(r === 'Kristen'){
-            religionImage.src = 'https://images.unsplash.com/photo-1529006557815-6c13f0d2819b?auto=format&fit=crop&w=1200&q=60';
+            religionImage.src = 'https://upload.wikimedia.org/wikipedia/commons/5/51/Gereja_St._Barbara_Sawahlunto_-_Denas.jpg';
             religionImage.alt = 'Gereja';
             religionTitle.textContent = 'Kristen';
             religionDesc.textContent = 'Kristen berfokus pada ajaran Yesus Kristus, mengajarkan kasih, pengampunan, dan keselamatan melalui iman kepada Kristus. Peribadatan biasanya dilakukan di gereja.';
         } else if(r === 'Konghucu'){
-            religionImage.src = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60';
+            religionImage.src = 'https://student-activity.binus.ac.id/kbmk/wp-content/uploads/sites/31/2021/04/Hapus.jpg';
             religionImage.alt = 'Kelenteng Konghucu';
             religionTitle.textContent = 'Konghucu';
             religionDesc.textContent = 'Konghucu adalah agama yang berlandaskan ajaran Nabi Kongzi (Confucius), menekankan kebajikan, kesopanan, dan hubungan harmonis antar manusia. ';
         } else if(r === 'Hindu'){
-            religionImage.src = 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1200&q=60';
+            religionImage.src = 'https://www.denpasarkota.go.id/public/uploads/wisata/datang_201303020347_PuraMekah.jpg';
             religionImage.alt = 'Kuil Hindu';
             religionTitle.textContent = 'Hindu';
             religionDesc.textContent = 'Hindu adalah tradisi yang sangat beragam yang meliputi kepercayaan pada banyak dewa, konsep dharma (kewajiban), karma (akibat perbuatan), dan siklus reinkarnasi.';
         } else if(r === 'Buddha'){
-            religionImage.src = 'https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1200&q=60';
+            religionImage.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIc093Hhps5hd8-QFHDCLfNHf4YZEoFBwEQg&s';
             religionImage.alt = 'Vihara / Patung Buddha';
             religionTitle.textContent = 'Buddha';
             religionDesc.textContent = 'Buddhisme berfokus pada ajaran Sang Buddha tentang mengatasi penderitaan melalui pencerahan (nirwana), dengan praktik meditasi dan kehidupan etis.';
@@ -628,6 +661,8 @@ function renderAdminPanel(){
         if (key.startsWith('completed-')) {
             try {
                 const data = JSON.parse(localStorage.getItem(key));
+                // Add the storage key to the data object
+                data.storageKey = key; 
                 students.push(data);
             } catch (e) {
                 console.error("Failed to parse localStorage data for key:", key, e);
@@ -639,7 +674,7 @@ function renderAdminPanel(){
         noStudentsMessage.style.display = 'block';
     } else {
         noStudentsMessage.style.display = 'none';
-        students.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)); // Sort by date, newest first
+        students.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
         students.forEach(s => {
             const li = document.createElement('li');
             const formattedDate = new Date(s.tanggal).toLocaleDateString('id-ID', {
@@ -650,12 +685,25 @@ function renderAdminPanel(){
                 minute: '2-digit'
             });
             li.innerHTML = `
-                <strong>${s.nama} (${s.kelas})</strong>
-                <span>Agama: ${s.agama} | Nilai: ${s.nilai}</span>
-                <span>Selesai pada: ${formattedDate}</span>
+                <div class="info">
+                    <strong>${s.nama} (${s.kelas})</strong>
+                    <span>Agama: ${s.agama} | Nilai: ${s.nilai}</span>
+                    <span>Selesai pada: ${formattedDate}</span>
+                </div>
+                <div class="actions">
+                    <button class="reset-btn" onclick="resetStudentData('${s.storageKey}')">Reset</button>
+                </div>
             `;
             studentListEl.appendChild(li);
         });
+    }
+}
+
+function resetStudentData(storageKey){
+    if(confirm('Apakah Anda yakin ingin mereset data siswa ini? Tindakan ini tidak bisa dibatalkan.')){
+        localStorage.removeItem(storageKey);
+        alert('Data siswa berhasil direset.');
+        renderAdminPanel(); // Refresh the admin panel to show the changes
     }
 }
 
@@ -876,7 +924,7 @@ function showFinalScore(){
     kirimBtn.style.marginTop = '10px';
     kirimBtn.addEventListener('click', () => {
         const pesan = `Halo Bu/Pak Guru, saya ${student.name} (Kelas ${student.kelas}) telah menyelesaikan pembelajaran tentang ${student.agama} dengan nilai: ${finalScoreText}`;
-        const url = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`; // ganti nomor guru di sini
+        const url = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`;
         window.open(url, '_blank');
     });
     scoreBox.appendChild(kirimBtn);
