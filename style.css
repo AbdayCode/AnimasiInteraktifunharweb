@@ -1,0 +1,490 @@
+:root{
+    --primary:#007bff;
+    --accent1:#00c6ff;
+    --accent2:#0072ff;
+    --glass-bg: rgba(0,0,0,0.38);
+    --card-bg: rgba(255,255,255,0.98);
+}
+
+html,body{
+    height:100%;
+    margin:0;
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240402/pngtree-back-to-school-theme-on-education-image_15647801.jpg');
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: 500px 500px;
+    background-attachment: fixed;
+    color:#111;
+    text-align:center;
+}
+
+/* progress bar */
+#progress-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:5px;
+    width:0%;
+    background: linear-gradient(90deg,var(--accent1),var(--accent2));
+    z-index:1200;
+    transition: width 0.2s linear;
+}
+
+.page {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:20px 16px 40px 16px;
+    box-sizing:border-box;
+}
+
+h2.site-title{
+    font-size: clamp(18px, 3.2vw, 30px);
+    font-weight:700;
+    margin:18px 0;
+    padding:10px 18px;
+    background-color: var(--card-bg); /* fallback */
+    background: linear-gradient(45deg, #FF6B6B, #556270, #4ECDC4);
+    background-size: 200% 200%; /* ukuran gradasi diubah */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* membuat teks transparan */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4); /* PROPERTI BARU */
+    border-radius:10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    animation: gradient-animation 5s ease infinite, fadeZoom 1s ease both; /* Durasi animasi diubah menjadi 5s */
+}
+
+/* NEW: animasi gradient bergerak */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeZoom {
+    from { opacity:0; transform: translateY(-6px) scale(.98); }
+    to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* small card container for form & choices */
+.card {
+    width: min(560px, 94vw);
+    background: var(--card-bg);
+    border-radius:12px;
+    padding:18px;
+    box-sizing:border-box;
+    margin: 12px auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.06);
+    text-align:left;
+}
+
+label { display:block; margin:8px 0 6px; font-weight:600; }
+input[type="text"], select {
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    font-size:15px;
+}
+
+.row { display:flex; gap:10px; }
+.row .col { flex:1; }
+
+.actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+
+button {
+    padding:10px 14px;
+    font-size:14px;
+    border-radius:8px;
+    border: none;
+    cursor:pointer;
+    background: var(--primary);
+    color:#fff;
+    box-shadow: 0 6px 18px rgba(0,123,255,0.12);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+button:active { transform: translateY(1px) scale(.998); }
+button:hover { box-shadow: 0 10px 28px rgba(0,123,255,0.18); }
+
+.muted { color:#0f0505; font-size:13px; }
+
+/* religion grid */
+.religions {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:10px;
+}
+.religion-btn {
+    padding:12px;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.06);
+    background:#0b50e4;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    text-align:center;
+    line-height:1.1;
+}
+.religion-btn:hover { transform: translateY(-3px); transition: all .12s ease; }
+
+/* NEW: visited button color */
+.religion-btn.visited {
+    background: #28a745; /* Green color */
+    color: #fff;
+    border-color: #218838;
+}
+
+/* improve the choose heading contrast */
+.choose-header {
+    color: #0b2545; /* darker for contrast */
+    font-size: 18px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+.choose-sub { color: #12366b; font-size:14px; margin-bottom:8px; }
+
+/* religion detail page */
+.religion-detail {
+    max-width:720px;
+    margin: 8px auto;
+    background: var(--card-bg);
+    border-radius:12px;
+    padding:12px;
+    box-shadow: 0 12px 30px rgba(19, 17, 17, 0.712);
+    border:1px solid rgb(12, 16, 20);
+    text-align:left;
+}
+.religion-image {
+    width:100%;
+    height:280px;
+    object-fit:cover;
+    border-radius:10px;
+    display:block;
+    margin-bottom:12px;
+    background: linear-gradient(180deg,#e9eef8,#f7f9ff);
+}
+.religion-title { font-size:20px; font-weight:900; color:#0b2545; margin-bottom:6px; }
+.religion-text { color:#222; font-size:15px; line-height:1.5; }
+
+/* video container responsive (from original) */
+.video-container{
+    position:relative;
+    width: min(420px, 92vw);
+    aspect-ratio: 9 / 16;
+    max-width: 420px;
+    margin: 10px auto;
+    background: #000;
+    border-radius: 12px;
+    overflow:hidden;
+    border:2px solid rgba(0,0,0,0.6);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+.video-container video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* watermark logo (NEW) */
+#watermark-logo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: clamp(60px, 15vw, 80px); /* Responsive sizing */
+    height: auto;
+    opacity: 0.6;
+    z-index: 1000;
+}
+
+/* dark overlay behind modal */
+#overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.34);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index:1100;
+    display:none;
+}
+
+/* popup question & score (same as original) */
+.modal {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    width: clamp(260px, 86%, 420px);
+    max-height: calc(100vh - 80px);
+    overflow:auto;
+    background: rgba(255,255,255,0.96);
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing:border-box;
+    border: 2px solid rgba(0,0,0,0.18);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    z-index: 1150;
+    display:none;
+    text-align:center;
+}
+
+.modal h3 { margin: 6px 0 12px 0; font-size: clamp(16px, 2.6vw, 20px); }
+#q-buttons {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+    margin-top:6px;
+}
+
+.correct { background:#28a745 !important; box-shadow: 0 8px 22px rgba(40,167,69,0.18) !important; }
+.wrong   { background:#dc3545 !important; box-shadow: 0 8px 22px rgba(220,53,69,0.18) !important; }
+
+#answer-feedback{ margin-top:10px; font-weight:700; display:none; font-size:16px; }
+
+#score-box h2 { margin:0 0 8px 0; font-size:20px; }
+#score-box p { margin:0 0 12px 0; font-weight:600; }
+
+/* admin panel styles */
+#step-admin {
+    width: min(720px, 94vw);
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 18px;
+    box-sizing: border-box;
+    margin: 12px auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.06);
+    text-align: left;
+}
+
+#step-admin h3 {
+    text-align:center;
+}
+
+.admin-student-list {
+    list-style-type: none;
+    padding:0;
+    margin:12px 0 0;
+}
+
+.admin-student-list li {
+    background: #f7f7f7;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:8px;
+    border:1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Gaya baru untuk peringkat */
+.admin-student-list .rank {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6c757d;
+    margin-right: 12px;
+    width: 30px;
+    text-align: right;
+}
+.admin-student-list .rank-1 { color: gold; }
+.admin-student-list .rank-2 { color: silver; }
+.admin-student-list .rank-3 { color: #cd7f32; }
+
+
+.admin-student-list li .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-student-list li .actions {
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+.admin-student-list li span {
+    display:block;
+    font-size:14px;
+    color:#555;
+}
+
+.admin-student-list li strong {
+    font-size:16px;
+    color:#222;
+}
+
+.reset-btn {
+    background: #dc3545;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Gaya baru untuk lencana */
+.achievement-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: linear-gradient(45deg, #f0e68c, #e9d700);
+    border: 2px solid gold;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(233, 215, 0, 0.2);
+}
+.achievement-badge img {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+}
+.achievement-badge span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* footer styles (NEW) */
+footer {
+    width:100%;
+    padding:20px 16px;
+    background: rgba(0,0,0,0.25);
+    color:#fff;
+    text-align:center;
+    margin-top:auto;
+    font-size:14px;
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* responsive adjustments (mobile) */
+@media (max-width:720px){
+    body { background-attachment: scroll; background-size: 380px 380px; }
+    #q-buttons { grid-template-columns: repeat(1, 1fr); }
+    button { font-size:16px; padding:12px; min-height:48px; }
+    .modal { padding:14px; }
+    .religions { grid-template-columns: repeat(2,1fr); }
+    .religion-image { height:160px; }
+}
+
+@media (max-width:420px){
+    .video-container { border-radius:10px; }
+    h2.site-title { padding:8px 12px; font-size:18px; }
+    .religions { grid-template-columns: repeat(1,1fr); }
+    .religion-image { height:160px; }
+}
+
+body.locked { overflow:hidden; touch-action:none; }
+.top-summary { margin:12px 0; font-weight:700; }
+.small-btn { background:#6c757d; color:#fff; border: none; padding:8px 10px; border-radius:8px; }
+
+/* NEW: Progress bar markers */
+#progress-container {
+    position: relative;
+    width: min(420px, 92vw);
+    height: 6px;
+    margin: 0 auto;
+}
+.progress-marker {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 2px solid #555;
+    transition: background-color 0.3s ease;
+}
+.progress-marker.reached {
+    background-color: #28a745;
+}
+
+/* NEW: Start button animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+.pulse-animate {
+    animation: pulse 1s infinite;
+}
+
+/* NEW: Loading spinner */
+#loading-spinner {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1500;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1400;
+    pointer-events: none;
+}
+.hidden {
+    display: none !important;
+}
+
+/* NEW: Summary page styles */
+.final-score-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745;
+}
+.summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 15px;
+    color: #333;
+}
+.summary-item:last-child {
+    border-bottom: none;
+}
+.summary-item .status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 14px;
+}
+.summary-item .status.correct {
+    background-color: #28a745;
+}
+.summary-item .status.wrong {
+    background-color: #dc3545;
+}
