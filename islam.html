@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Islam | Materi Pembelajaran Agama</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card-custom {
+      border-radius: 15px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .card-custom:hover {
+      transform: translateY(-5px);
+    }
+    .title-section {
+      background: linear-gradient(45deg, #198754, #20c997); /* Warna hijau untuk Islam */
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+    .btn-back, .btn-back-main {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 25px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+    .btn-back:hover, .btn-back-main:hover {
+      background-color: #495057;
+    }
+    .hidden {
+      display: none;
+    }
+    .next-button {
+      background-color: #0dcaf0;
+      color: white;
+      border-radius: 50px;
+      padding: 10px 25px;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    .next-button:hover {
+      background-color: #0c9abf;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="click-audio" src="click.mp3" preload="auto"></audio>
+  <audio id="background-audio" loop>
+      <source src="bg.mp3" type="audio/mpeg">
+      Maaf, browser Anda tidak mendukung audio.
+  </audio>
+
+  <div class="title-section text-center">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Agama Islam</h1>
+      <p class="lead">Pelajari tentang rukun iman, rukun Islam, dan tempat ibadahnya.</p>
+      <a href="halaman_belajar.html" class="btn btn-back-main mt-3">Kembali</a>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        <div id="materi-ketuhanan" class="card card-custom shadow-sm p-4 mb-4">
+          <h3 class="card-title fw-bold text-success mb-3">Ketuhanan</h3>
+          <p>Konsep ketuhanan dalam Islam dikenal dengan istilah <b>Tauhid</b>, yang artinya mengesakan atau meyakini keesaan Allah SWT. Umat Islam percaya bahwa hanya ada satu Tuhan, yaitu Allah, yang Maha Esa, Maha Kuasa, dan Maha Pencipta. Allah tidak beranak dan tidak diperanakkan, serta tidak ada yang setara dengan-Nya. Tauhid adalah inti dari ajaran Islam dan menjadi landasan bagi seluruh ibadah dan keyakinan.</p>
+          <p>Keyakinan ini tercermin dalam kalimat syahadat, "Asyhadu an laa ilaaha illallaah, wa asyhadu anna muhammadan rasuulullaah" yang berarti "Aku bersaksi tiada Tuhan selain Allah, dan aku bersaksi bahwa Muhammad adalah utusan Allah."</p>
+          <div class="text-end mt-3">
+            <button class="next-button" data-target="materi-nabi">Selanjutnya</button>
+          </div>
+        </div>
+
+        <div id="materi-nabi" class="card card-custom shadow-sm p-4 mb-4 hidden">
+          <h3 class="card-title fw-bold text-success mb-3">Nabi dan Rasul</h3>
+          <p>Dalam Islam, <b>Nabi dan Rasul</b> adalah manusia pilihan Allah yang diutus untuk menyampaikan ajaran-Nya kepada umat manusia. Nabi adalah orang yang menerima wahyu dari Allah untuk dirinya sendiri, sedangkan Rasul adalah Nabi yang juga diwajibkan untuk menyampaikannya kepada umat. Meskipun ada banyak Nabi, hanya 25 Nabi dan Rasul yang wajib diketahui, dimulai dari Nabi Adam AS hingga Nabi Muhammad SAW.</p>
+          <p>Nabi Muhammad SAW adalah Nabi terakhir dan penutup para Nabi. Beliau diutus untuk seluruh umat manusia dan ajarannya menyempurnakan ajaran-ajaran Nabi sebelumnya. Beliau adalah teladan terbaik bagi umat Islam dalam segala aspek kehidupan.</p>
+          <div class="text-end mt-3">
+            <button class="next-button" data-target="materi-kitab">Selanjutnya</button>
+          </div>
+        </div>
+
+        <div id="materi-kitab" class="card card-custom shadow-sm p-4 mb-4 hidden">
+          <h3 class="card-title fw-bold text-success mb-3">Kitab Suci</h3>
+          <p>Umat Islam meyakini bahwa Allah telah menurunkan beberapa kitab suci kepada para Rasul-Nya sebagai pedoman hidup. Kitab-kitab suci yang wajib diimani ada empat, yaitu:</p>
+          <ul>
+            <li><b>Taurat</b>, diturunkan kepada Nabi Musa AS.</li>
+            <li><b>Zabur</b>, diturunkan kepada Nabi Daud AS.</li>
+            <li><b>Injil</b>, diturunkan kepada Nabi Isa AS.</li>
+            <li><b>Al-Qur'an</b>, diturunkan kepada Nabi Muhammad SAW.</li>
+          </ul>
+          <p><b>Al-Qur'an</b> adalah kitab suci terakhir dan paling sempurna, yang berfungsi sebagai penyempurna dan penjaga keaslian ajaran kitab-kitab sebelumnya. Al-Qur'an berisi hukum, petunjuk, dan pedoman lengkap untuk kehidupan manusia di dunia dan akhirat.</p>
+          <div class="text-end mt-3">
+            <button class="next-button" data-target="materi-tempat-ibadah">Selanjutnya</button>
+          </div>
+        </div>
+
+        <div id="materi-tempat-ibadah" class="card card-custom shadow-sm p-4 mb-4 hidden">
+          <h3 class="card-title fw-bold text-success mb-3">Tempat Ibadah</h3>
+          <p>Tempat ibadah utama umat Islam adalah <b>Masjid</b> atau <b>Musholla</b>. Kata "Masjid" berasal dari bahasa Arab yang berarti tempat sujud, yaitu tempat untuk bersujud kepada Allah. Di masjid, umat Islam berkumpul untuk melaksanakan shalat berjamaah, mendengarkan khutbah (ceramah agama), dan kegiatan keagamaan lainnya.</p>
+          <p>Masjid juga berfungsi sebagai pusat pendidikan dan sosial bagi masyarakat Muslim. Terdapat pula tempat-tempat suci seperti Ka'bah di Mekah, yang menjadi kiblat (arah shalat) seluruh umat Islam di dunia.</p>
+          <div class="text-end mt-3">
+            <button id="show-quiz-button" class="next-button" data-target="quiz-container">Mulai Kuis</button>
+          </div>
+        </div>
+
+        <div id="quiz-container" class="card card-custom shadow-sm p-4 hidden">
+          <h4 class="card-title fw-bold text-center mb-4">Quiz Agama Islam</h4>
+          <form id="quiz-form">
+            <div class="mb-3">
+              <p class="fw-bold">1. Apa nama kitab suci agama Islam?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="a" id="q1a">
+                <label class="form-check-label" for="q1a">Al-Qur'an</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="b" id="q1b">
+                <label class="form-check-label" for="q1b">Injil</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="c" id="q1c">
+                <label class="form-check-label" for="q1c">Zabur</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="d" id="q1d">
+                <label class="form-check-label" for="q1d">Taurat</label>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <p class="fw-bold">2. Siapa nabi terakhir dalam agama Islam?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="a" id="q2a">
+                <label class="form-check-label" for="q2a">Nabi Ibrahim</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="b" id="q2b">
+                <label class="form-check-label" for="q2b">Nabi Musa</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="c" id="q2c">
+                <label class="form-check-label" for="q2c">Nabi Muhammad</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="d" id="q2d">
+                <label class="form-check-label" for="q2d">Nabi Isa</label>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <p class="fw-bold">3. Apa nama tempat ibadah umat Islam?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="a" id="q3a">
+                <label class="form-check-label" for="q3a">Gereja</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="b" id="q3b">
+                <label class="form-check-label" for="q3b">Pura</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="c" id="q3c">
+                <label class="form-check-label" for="q3c">Vihara</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="d" id="q3d">
+                <label class="form-check-label" for="q3d">Masjid</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="fw-bold">4. Rukun Islam yang kedua adalah?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="a" id="q4a">
+                <label class="form-check-label" for="q4a">Puasa Ramadhan</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="b" id="q4b">
+                <label class="form-check-label" for="q4b">Membaca syahadat</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="c" id="q4c">
+                <label class="form-check-label" for="q4c">Shalat</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="d" id="q4d">
+                <label class="form-check-label" for="q4d">Zakat</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="fw-bold">5. Berikut ini yang merupakan kitab suci yang diturunkan kepada Nabi Musa AS adalah?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="a" id="q5a">
+                <label class="form-check-label" for="q5a">Al-Qur'an</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="b" id="q5b">
+                <label class="form-check-label" for="q5b">Injil</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="c" id="q5c">
+                <label class="form-check-label" for="q5c">Taurat</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="d" id="q5d">
+                <label class="form-check-label" for="q5d">Zabur</label>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" id="submit-quiz-islam" class="btn btn-success btn-lg">Kumpulkan Jawaban</button>
+            </div>
+          </form>
+        </div>
+        
+        <div id="quiz-results" class="card card-custom shadow-sm p-4 mt-4 hidden">
+          <h4 class="text-center">Hasil Kuis</h4>
+          <p id="score-text" class="text-center fs-2 fw-bold my-3"></p>
+          <p id="retake-message" class="text-center text-muted fst-italic mt-2" style="display: none;"></p>
+          <div class="text-center mt-3">
+            <a href="halaman_belajar.html" class="btn btn-primary btn-back">Kembali ke Halaman Utama</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUserName = localStorage.getItem('namaPengguna');
+      const scoreKey = `${currentUserName}_islamScore`;
+      const quizForm = document.getElementById('quiz-form');
+      const quizResultsDiv = document.getElementById('quiz-results');
+      const submitButton = document.getElementById('submit-quiz-islam');
+      const retakeMessage = document.getElementById('retake-message');
+      const materiSections = document.querySelectorAll('.card-custom');
+      const nextButtons = document.querySelectorAll('.next-button');
+      const showQuizButton = document.getElementById('show-quiz-button');
+      const quizContainer = document.getElementById('quiz-container');
+      const audio = document.getElementById('background-audio');
+
+      const clickAudio = new Audio('click.mp3');
+
+      function playClickSound(event) {
+          clickAudio.currentTime = 0;
+          clickAudio.play().catch(e => {
+              console.error("Audio playback blocked:", e);
+          });
+          if (event.target.tagName === 'A' || event.target.closest('a')) {
+              event.preventDefault();
+              setTimeout(() => {
+                  window.location.href = event.target.href || event.target.closest('a').href;
+              }, 300);
+          }
+      }
+
+      document.querySelector('.btn-back-main').addEventListener('click', playClickSound);
+      nextButtons.forEach(button => {
+          button.addEventListener('click', playClickSound);
+      });
+      showQuizButton.addEventListener('click', playClickSound);
+      submitButton.addEventListener('click', playClickSound);
+      
+      const backToMainLink = document.querySelector('#quiz-results a');
+      if (backToMainLink) {
+          backToMainLink.addEventListener('click', playClickSound);
+      }
+
+      const hasWatchedVideo = localStorage.getItem(`${currentUserName}_watchedVideo`);
+      if (hasWatchedVideo === 'true') {
+        audio.play().catch(e => console.error("Autoplay was blocked:", e));
+      } else {
+        // Jika belum menonton video, kembali ke halaman belajar
+        window.location.href = 'halaman_belajar.html';
+        return;
+      }
+
+      // Sembunyikan semua section kecuali yang pertama
+      materiSections.forEach(section => {
+          if (section.id !== 'materi-ketuhanan') {
+              section.classList.add('hidden');
+          }
+      });
+
+      nextButtons.forEach(button => {
+          button.addEventListener('click', function() {
+              const currentSection = button.closest('.card-custom');
+              const targetId = button.dataset.target;
+              const targetSection = document.getElementById(targetId);
+
+              if (targetSection) {
+                  currentSection.classList.add('hidden');
+                  targetSection.classList.remove('hidden');
+              }
+          });
+      });
+
+      showQuizButton.addEventListener('click', function() {
+          const tempatIbadahSection = document.getElementById('materi-tempat-ibadah');
+          tempatIbadahSection.classList.add('hidden');
+          quizContainer.classList.remove('hidden');
+      });
+
+      const savedScore = localStorage.getItem(scoreKey);
+      if (savedScore) {
+          materiSections.forEach(section => section.classList.add('hidden'));
+          quizContainer.classList.remove('hidden');
+          quizForm.classList.add('hidden');
+          quizResultsDiv.classList.remove('hidden');
+          document.getElementById('score-text').textContent = `Skor Anda: ${savedScore}`;
+          retakeMessage.style.display = 'block';
+          retakeMessage.textContent = `Anda sudah mengerjakan kuis ini. Nilai Anda sudah tersimpan.`;
+      }
+      
+      submitButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const correctAnswers = {
+              q1: 'a',
+              q2: 'c',
+              q3: 'd',
+              q4: 'c',
+              q5: 'c'
+          };
+
+          let score = 0;
+          const q1Answer = document.querySelector('input[name="q1"]:checked');
+          const q2Answer = document.querySelector('input[name="q2"]:checked');
+          const q3Answer = document.querySelector('input[name="q3"]:checked');
+          const q4Answer = document.querySelector('input[name="q4"]:checked');
+          const q5Answer = document.querySelector('input[name="q5"]:checked');
+
+          if (!q1Answer || !q2Answer || !q3Answer || !q4Answer || !q5Answer) {
+              alert('Mohon jawab semua pertanyaan!');
+              return;
+          }
+
+          if (q1Answer.value === correctAnswers.q1) score++;
+          if (q2Answer.value === correctAnswers.q2) score++;
+          if (q3Answer.value === correctAnswers.q3) score++;
+          if (q4Answer.value === correctAnswers.q4) score++;
+          if (q5Answer.value === correctAnswers.q5) score++;
+
+          const finalScore = (score / 5) * 100;
+
+          localStorage.setItem(scoreKey, finalScore);
+
+          document.getElementById('score-text').textContent = `Skor Anda: ${finalScore}`;
+          quizResultsDiv.classList.remove('hidden');
+          
+          quizForm.classList.add('hidden');
+          retakeMessage.style.display = 'block';
+          retakeMessage.textContent = 'Anda sudah menyelesaikan kuis ini. Nilai Anda sudah tersimpan.';
+          
+          window.scrollTo({
+              top: quizResultsDiv.offsetTop,
+              behavior: 'smooth'
+          });
+      });
+    });
+  </script>
+</body>
+</html>

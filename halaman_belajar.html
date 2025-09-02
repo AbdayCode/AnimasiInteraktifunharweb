@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pilihan Pembelajaran</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .title-section {
+      background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 3rem;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+    .option-btn {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 10px;
+      margin: 10px;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .option-btn:hover {
+      transform: translateY(-3px);
+    }
+    .option-btn.locked {
+      cursor: not-allowed;
+      background-color: #e9ecef;
+      color: #6c757d;
+      border: 1px solid #dee2e6;
+    }
+    .option-btn.locked:hover {
+      transform: none;
+    }
+    .card-custom {
+      border-radius: 15px;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .card-custom:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .card-img-top {
+      height: 150px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    .full-screen-video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      display: none;
+      z-index: 1050;
+    }
+    .full-screen-video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .recap-section {
+      display: none;
+      text-align: center;
+      margin-top: 5rem;
+    }
+    .hidden-by-js {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <audio id="click-audio" src="click.mp3" preload="auto"></audio>
+
+  <audio id="background-audio" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+    Maaf, browser Anda tidak mendukung audio.
+  </audio>
+
+  <div id="main-content">
+    <div class="title-section text-center">
+      <div class="container">
+        <h1 class="display-4 fw-bold">Pilihan Pembelajaran</h1>
+        <p class="lead">Selamat datang, <span id="welcome-message" class="fw-bold"></span>! Pilih metode pembelajaran yang kamu inginkan.</p>
+      </div>
+    </div>
+
+    <div class="container text-center mb-5">
+      <button id="btn-materi" class="btn btn-primary option-btn locked" disabled>
+        Materi Pembelajaran
+        <br>
+        <small id="materi-status" class="fw-normal mt-2 d-block">Tonton video 3D untuk membuka</small>
+      </button>
+      <button id="btn-video" class="btn btn-success option-btn">Video Animasi 3D</button>
+    </div>
+  </div>
+
+  <div id="materi-pembelajaran" class="container hidden-by-js">
+    <h2 class="mb-4">Materi Kuis</h2>
+    <div class="row g-4 justify-content-center mb-5">
+      <div class="col-md-6 col-lg-4">
+        <a href="islam.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="islam.jpeg" class="card-img-top" alt="Islam">
+            <div class="card-body">
+              <h5 class="card-title text-success fw-bold">Agama Islam</h5>
+              <p class="card-text text-muted">Pelajari tentang ajaran, rukun iman, dan tempat ibadah Islam.</p>
+              <p id="islam-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <a href="kristen.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="kristen.jpg" class="card-img-top" alt="Kristen">
+            <div class="card-body">
+              <h5 class="card-title text-primary fw-bold">Agama Kristen</h5>
+              <p class="card-text text-muted">Pelajari tentang keyakinan, Alkitab, dan ibadah umat Kristen.</p>
+              <p id="kristen-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <a href="katolik.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="katolik.jpg" class="card-img-top" alt="Katolik">
+            <div class="card-body">
+              <h5 class="card-title text-info fw-bold">Agama Katolik</h5>
+              <p class="card-text text-muted">Pelajari tentang keyakinan, Alkitab, dan ibadah umat Katolik.</p>
+              <p id="katolik-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <a href="hindu.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="hindu.jpg" class="card-img-top" alt="Hindu">
+            <div class="card-body">
+              <h5 class="card-title text-warning fw-bold">Agama Hindu</h5>
+              <p class="card-text text-muted">Pelajari tentang Dharma, Karma, Trimurti, dan Pura.</p>
+              <p id="hindu-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <a href="buddha.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="buddha.jpg" class="card-img-top" alt="Buddha">
+            <div class="card-body">
+              <h5 class="card-title text-secondary fw-bold">Agama Buddha</h5>
+              <p class="card-text text-muted">Pelajari tentang Empat Kebenaran Mulia dan Nirwana.</p>
+              <p id="buddha-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <a href="konghucu.html" class="text-decoration-none card-link">
+          <div class="card card-custom shadow-sm h-100">
+            <img src="konghucu.jpg" class="card-img-top" alt="Konghucu">
+            <div class="card-body">
+              <h5 class="card-title text-danger fw-bold">Agama Konghucu</h5>
+              <p class="card-text text-muted">Pelajari tentang ajaran, moral, dan filsafat Konghucu.</p>
+              <p id="konghucu-score" class="card-text text-end fw-bold text-primary" style="display: none;"></p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="pembelajaran-video-container" class="full-screen-video-container">
+    <video id="pembelajaran-video" controls>
+        <source src="SKRIPSU (6).mp4" type="video/mp4">
+        Maaf, browser Anda tidak mendukung tag video.
+    </video>
+  </div>
+  
+  <div id="recap-nilai" class="container recap-section">
+    <h2 class="mb-4">Rekap Nilai Pembelajaran</h2>
+    <div class="card shadow-sm p-4">
+      <h3 class="card-title fw-bold text-success mb-3">Selamat, <span id="recap-username"></span>!</h3>
+      <p class="card-text fs-5">Anda telah menyelesaikan semua kuis dan pembelajaran video. Berikut adalah rata-rata nilai Anda:</p>
+      <h1 id="average-score" class="display-3 fw-bold text-primary my-4">--</h1>
+      <p class="card-text text-muted">Nilai ini didapat dari rata-rata seluruh kuis yang telah Anda kerjakan.</p>
+    </div>
+    <div class="text-center mt-4">
+      <a href="index.html" class="btn btn-secondary option-btn logout-link">Log Out</a>
+    </div>
+  </div>
+  
+  <div id="logout-button" class="text-center mt-5 mb-5 hidden-by-js">
+    <a href="index.html" class="btn btn-secondary option-btn logout-link">Log Out</a>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUserName = localStorage.getItem('namaPengguna');
+      const welcomeMessage = document.getElementById('welcome-message');
+      const btnMateri = document.getElementById('btn-materi');
+      const btnVideo = document.getElementById('btn-video');
+      const materiSection = document.getElementById('materi-pembelajaran');
+      const recapSection = document.getElementById('recap-nilai');
+      const mainContent = document.getElementById('main-content');
+      const logoutButton = document.getElementById('logout-button');
+      const materiStatus = document.getElementById('materi-status');
+      const recapUsernameElement = document.getElementById('recap-username');
+      const averageScoreElement = document.getElementById('average-score');
+      const videoContainer = document.getElementById('pembelajaran-video-container');
+      const videoElement = document.getElementById('pembelajaran-video');
+      
+      const religions = ['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu'];
+      const audio = document.getElementById('background-audio');
+      const clickAudio = document.getElementById('click-audio');
+
+      // PENTING: Cek nama pengguna. Jika tidak ada, kembalikan ke halaman login
+      if (!currentUserName) {
+        window.location.href = 'index.html';
+        return;
+      }
+      welcomeMessage.textContent = currentUserName;
+
+      const hasWatchedVideo = localStorage.getItem(`${currentUserName}_watchedVideo`);
+      if (hasWatchedVideo === 'true') {
+        btnMateri.classList.remove('locked');
+        btnMateri.disabled = false;
+        materiStatus.textContent = 'Selamat! Anda bisa mulai belajar.';
+        btnVideo.classList.add('locked');
+        btnVideo.disabled = true;
+      } else {
+        btnMateri.classList.add('locked');
+        btnMateri.disabled = true;
+        materiStatus.textContent = 'Tonton video 3D untuk membuka';
+      }
+
+      function checkAllQuizzesCompleted() {
+        let completedCount = 0;
+        let totalScore = 0;
+        religions.forEach(religion => {
+          const score = localStorage.getItem(`${currentUserName}_${religion}Score`);
+          const scoreElement = document.getElementById(`${religion}-score`);
+          
+          if (score !== null && !isNaN(parseInt(score))) {
+            completedCount++;
+            totalScore += parseInt(score);
+            scoreElement.textContent = `Nilai: ${score}`;
+            scoreElement.style.display = 'block';
+          } else {
+            scoreElement.textContent = `Belum Mengerjakan`;
+            scoreElement.style.display = 'block';
+          }
+        });
+
+        if (completedCount === religions.length) {
+          const averageScore = (totalScore / completedCount).toFixed(2);
+          recapUsernameElement.textContent = currentUserName;
+          averageScoreElement.textContent = averageScore;
+          
+          mainContent.classList.add('hidden-by-js');
+          materiSection.classList.add('hidden-by-js');
+          logoutButton.classList.add('hidden-by-js');
+          recapSection.style.display = 'block';
+
+          if (!audio.paused) {
+            audio.pause();
+          }
+          return true;
+        } else {
+          mainContent.classList.remove('hidden-by-js');
+          materiSection.classList.remove('hidden-by-js');
+          logoutButton.classList.remove('hidden-by-js');
+          recapSection.style.display = 'none';
+
+          if (hasWatchedVideo === 'true') {
+            if (audio.paused) {
+              audio.play().catch(e => console.error("Autoplay was blocked:", e));
+            }
+          }
+        }
+        return false;
+      }
+
+      function playClickSound() {
+        clickAudio.currentTime = 0;
+        clickAudio.play().catch(e => {
+          console.error("Audio playback blocked:", e);
+        });
+      }
+
+      const allClickableElements = document.querySelectorAll('button, a.card-link, a.logout-link');
+
+      allClickableElements.forEach(element => {
+        element.addEventListener('click', function(event) {
+          if (element.disabled || element.classList.contains('locked')) {
+            event.preventDefault();
+            playClickSound();
+            return;
+          }
+
+          if (element.tagName === 'A' && element.href !== '#') {
+            event.preventDefault();
+            playClickSound();
+            const href = element.href;
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          } else {
+            playClickSound();
+          }
+        });
+      });
+
+      btnMateri.addEventListener('click', function() {
+        if (!btnMateri.disabled) {
+          checkAllQuizzesCompleted();
+        }
+      });
+
+      btnVideo.addEventListener('click', function() {
+        if (!btnVideo.disabled) {
+          mainContent.classList.add('hidden-by-js');
+          materiSection.classList.add('hidden-by-js');
+          logoutButton.classList.add('hidden-by-js');
+          recapSection.style.display = 'none';
+          
+          videoContainer.style.display = 'block';
+          audio.pause();
+          try {
+            videoElement.play();
+            videoContainer.requestFullscreen().catch(e => {
+              console.error("Fullscreen failed:", e);
+              alert("Gagal masuk mode layar penuh. Video akan tetap diputar.");
+            });
+          } catch (e) {
+            alert("Terjadi kesalahan saat memutar video. Mohon pastikan file video ada dan dapat diakses.");
+            console.error(e);
+            videoContainer.style.display = 'none';
+          }
+        }
+      });
+      
+      videoElement.addEventListener('ended', () => {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+        localStorage.setItem(`${currentUserName}_watchedVideo`, 'true');
+        btnMateri.classList.remove('locked');
+        btnMateri.disabled = false;
+        materiStatus.textContent = 'Selamat! Anda bisa mulai belajar.';
+        btnVideo.classList.add('locked');
+        btnVideo.disabled = true;
+        videoContainer.style.display = 'none';
+        
+        checkAllQuizzesCompleted();
+      });
+
+      checkAllQuizzesCompleted();
+    });
+  </script>
+</body>
+</html>

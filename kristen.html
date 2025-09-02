@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kristen | Materi Pembelajaran Agama</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card-custom {
+      border-radius: 15px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .card-custom:hover {
+      transform: translateY(-5px);
+    }
+    .title-section {
+      background: linear-gradient(45deg, #0d6efd, #6c757d);
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+    .btn-back, .btn-back-main {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 25px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+    .btn-back:hover, .btn-back-main:hover {
+      background-color: #495057;
+    }
+    .hidden {
+      display: none;
+    }
+    .next-button {
+      background-color: #0dcaf0;
+      color: white;
+      border-radius: 50px;
+      padding: 10px 25px;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    .next-button:hover {
+      background-color: #0c9abf;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="click-audio" src="click.mp3" preload="auto"></audio>
+  <audio id="background-audio" loop>
+      <source src="bg.mp3" type="audio/mpeg">
+      Maaf, browser Anda tidak mendukung audio.
+  </audio>
+
+  <div class="title-section text-center">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Agama Kristen</h1>
+      <p class="lead">Pelajari tentang keyakinan, Alkitab, dan ibadah umat Kristen.</p>
+      <a href="halaman_belajar.html" class="btn btn-back-main mt-3">Kembali</a>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        <div id="materi-ketuhanan" class="card card-custom shadow-sm p-4 mb-4">
+          <h3 class="card-title fw-bold text-primary mb-3">Ketuhanan</h3>
+          <p>Umat Kristen percaya pada satu Tuhan, yang dikenal sebagai **Tritunggal Mahakudus**: Bapa, Putra (Yesus Kristus), dan Roh Kudus. Konsep ini mengajarkan bahwa Tuhan adalah satu kesatuan dalam tiga pribadi. Tuhan Bapa adalah Pencipta alam semesta, Yesus Kristus adalah Anak Allah yang datang ke bumi untuk menyelamatkan umat manusia, dan Roh Kudus adalah penolong yang membimbing orang percaya.</p>
+          <div class="text-end mt-3">
+            <button class="next-button" data-target="materi-kitab">Selanjutnya</button>
+          </div>
+        </div>
+
+        <div id="materi-kitab" class="card card-custom shadow-sm p-4 mb-4 hidden">
+          <h3 class="card-title fw-bold text-primary mb-3">Kitab Suci</h3>
+          <p>Kitab suci utama dalam agama Kristen adalah **Alkitab**. Alkitab terdiri dari dua bagian utama: **Perjanjian Lama** dan **Perjanjian Baru**. Perjanjian Lama berisi sejarah bangsa Israel dan nubuat-nubuat, sedangkan Perjanjian Baru menceritakan kehidupan, ajaran, kematian, dan kebangkitan Yesus Kristus, serta sejarah gereja mula-mula.</p>
+          <div class="text-end mt-3">
+            <button class="next-button" data-target="materi-tempat-ibadah">Selanjutnya</button>
+          </div>
+        </div>
+
+        <div id="materi-tempat-ibadah" class="card card-custom shadow-sm p-4 mb-4 hidden">
+          <h3 class="card-title fw-bold text-primary mb-3">Tempat Ibadah</h3>
+          <p>Tempat ibadah umat Kristen adalah **Gereja**. Di gereja, mereka berkumpul untuk beribadah, mendengarkan khotbah (ceramah keagamaan), dan berdoa. Ibadah mingguan biasanya dilaksanakan pada hari Minggu. Selain gereja, orang Kristen juga sering beribadah secara pribadi di rumah masing-masing.</p>
+          <div class="text-end mt-3">
+            <button id="show-quiz-button" class="next-button" data-target="quiz-container">Mulai Kuis</button>
+          </div>
+        </div>
+
+        <div id="quiz-container" class="card card-custom shadow-sm p-4 hidden">
+          <h4 class="card-title fw-bold text-center mb-4">Quiz Agama Kristen</h4>
+          <form id="quiz-form">
+            <div class="mb-3">
+              <p class="fw-bold">1. Siapa yang dianggap sebagai Anak Allah dalam agama Kristen?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="a" id="q1a">
+                <label class="form-check-label" for="q1a">Nabi Musa</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="b" id="q1b">
+                <label class="form-check-label" for="q1b">Yesus Kristus</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="c" id="q1c">
+                <label class="form-check-label" for="q1c">Bapa</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" value="d" id="q1d">
+                <label class="form-check-label" for="q1d">Roh Kudus</label>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <p class="fw-bold">2. Apa nama kitab suci agama Kristen?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="a" id="q2a">
+                <label class="form-check-label" for="q2a">Al-Qur'an</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="b" id="q2b">
+                <label class="form-check-label" for="q2b">Injil</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="c" id="q2c">
+                <label class="form-check-label" for="q2c">Taurat</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" value="d" id="q2d">
+                <label class="form-check-label" for="q2d">Alkitab</label>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <p class="fw-bold">3. Di mana umat Kristen biasanya beribadah?</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="a" id="q3a">
+                <label class="form-check-label" for="q3a">Masjid</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="b" id="q3b">
+                <label class="form-check-label" for="q3b">Gereja</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="c" id="q3c">
+                <label class="form-check-label" for="q3c">Wihara</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3" value="d" id="q3d">
+                <label class="form-check-label" for="q3d">Pura</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="fw-bold">4. Alkitab terdiri dari dua bagian utama, yaitu...</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="a" id="q4a">
+                <label class="form-check-label" for="q4a">Injil dan Taurat</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="b" id="q4b">
+                <label class="form-check-label" for="q4b">Perjanjian Lama dan Perjanjian Baru</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="c" id="q4c">
+                <label class="form-check-label" for="q4c">Taurat dan Zabur</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4" value="d" id="q4d">
+                <label class="form-check-label" for="q4d">Alkitab dan Injil</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="fw-bold">5. Konsep Tritunggal dalam Kristen terdiri dari Bapa, Putra, dan...</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="a" id="q5a">
+                <label class="form-check-label" for="q5a">Nabi</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="b" id="q5b">
+                <label class="form-check-label" for="q5b">Rasul</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="c" id="q5c">
+                <label class="form-check-label" for="q5c">Roh Kudus</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5" value="d" id="q5d">
+                <label class="form-check-label" for="q5d">Malaikat</label>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" id="submit-quiz-kristen" class="btn btn-success btn-lg">Kumpulkan Jawaban</button>
+            </div>
+          </form>
+        </div>
+        
+        <div id="quiz-results" class="card card-custom shadow-sm p-4 mt-4 hidden">
+          <h4 class="text-center">Hasil Kuis</h4>
+          <p id="score-text" class="text-center fs-2 fw-bold my-3"></p>
+          <p id="retake-message" class="text-center text-muted fst-italic mt-2" style="display: none;"></p>
+          <div class="text-center mt-3">
+            <a href="halaman_belajar.html" class="btn btn-primary btn-back">Kembali ke Halaman Utama</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUserName = localStorage.getItem('namaPengguna');
+      const scoreKey = `${currentUserName}_kristenScore`;
+      const quizForm = document.getElementById('quiz-form');
+      const quizResultsDiv = document.getElementById('quiz-results');
+      const submitButton = document.getElementById('submit-quiz-kristen');
+      const retakeMessage = document.getElementById('retake-message');
+      const materiSections = document.querySelectorAll('.card-custom');
+      const nextButtons = document.querySelectorAll('.next-button');
+      const showQuizButton = document.getElementById('show-quiz-button');
+      const quizContainer = document.getElementById('quiz-container');
+      const audio = document.getElementById('background-audio');
+
+      const clickAudio = new Audio('click.mp3');
+
+      function playClickSound(event) {
+          clickAudio.currentTime = 0;
+          clickAudio.play().catch(e => {
+              console.error("Audio playback blocked:", e);
+          });
+          if (event.target.tagName === 'A' || event.target.closest('a')) {
+              event.preventDefault();
+              setTimeout(() => {
+                  window.location.href = event.target.href || event.target.closest('a').href;
+              }, 300);
+          }
+      }
+
+      document.querySelector('.btn-back-main').addEventListener('click', playClickSound);
+      nextButtons.forEach(button => {
+          button.addEventListener('click', playClickSound);
+      });
+      showQuizButton.addEventListener('click', playClickSound);
+      submitButton.addEventListener('click', playClickSound);
+      
+      const backToMainLink = document.querySelector('#quiz-results a');
+      if (backToMainLink) {
+          backToMainLink.addEventListener('click', playClickSound);
+      }
+
+      const hasWatchedVideo = localStorage.getItem(`${currentUserName}_watchedVideo`);
+      if (hasWatchedVideo === 'true') {
+        audio.play().catch(e => console.error("Autoplay was blocked:", e));
+      } else {
+        window.location.href = 'halaman_belajar.html';
+        return;
+      }
+
+      const savedScore = localStorage.getItem(scoreKey);
+      if (savedScore) {
+          materiSections.forEach(section => section.classList.add('hidden'));
+          quizContainer.classList.remove('hidden');
+          quizForm.classList.add('hidden');
+          quizResultsDiv.classList.remove('hidden');
+          document.getElementById('score-text').textContent = `Skor Anda: ${savedScore}`;
+          retakeMessage.style.display = 'block';
+          retakeMessage.textContent = `Anda sudah mengerjakan kuis ini. Nilai Anda sudah tersimpan.`;
+          return;
+      }
+
+      materiSections.forEach(section => {
+          if (section.id !== 'materi-ketuhanan') {
+              section.classList.add('hidden');
+          }
+      });
+
+      nextButtons.forEach(button => {
+          button.addEventListener('click', function() {
+              const currentSection = button.closest('.card-custom');
+              const targetId = button.dataset.target;
+              const targetSection = document.getElementById(targetId);
+
+              if (targetSection) {
+                  currentSection.classList.add('hidden');
+                  targetSection.classList.remove('hidden');
+              }
+          });
+      });
+
+      showQuizButton.addEventListener('click', function() {
+          const tempatIbadahSection = document.getElementById('materi-tempat-ibadah');
+          tempatIbadahSection.classList.add('hidden');
+          quizContainer.classList.remove('hidden');
+      });
+      
+      submitButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const correctAnswers = {
+              q1: 'b',
+              q2: 'd',
+              q3: 'b',
+              q4: 'b',
+              q5: 'c'
+          };
+
+          let score = 0;
+          const q1Answer = document.querySelector('input[name="q1"]:checked');
+          const q2Answer = document.querySelector('input[name="q2"]:checked');
+          const q3Answer = document.querySelector('input[name="q3"]:checked');
+          const q4Answer = document.querySelector('input[name="q4"]:checked');
+          const q5Answer = document.querySelector('input[name="q5"]:checked');
+
+          if (!q1Answer || !q2Answer || !q3Answer || !q4Answer || !q5Answer) {
+              alert('Mohon jawab semua pertanyaan!');
+              return;
+          }
+
+          if (q1Answer.value === correctAnswers.q1) score++;
+          if (q2Answer.value === correctAnswers.q2) score++;
+          if (q3Answer.value === correctAnswers.q3) score++;
+          if (q4Answer.value === correctAnswers.q4) score++;
+          if (q5Answer.value === correctAnswers.q5) score++;
+
+          const finalScore = (score / 5) * 100;
+
+          localStorage.setItem(scoreKey, finalScore);
+
+          document.getElementById('score-text').textContent = `Skor Anda: ${finalScore}`;
+          quizResultsDiv.classList.remove('hidden');
+          
+          quizForm.classList.add('hidden');
+          retakeMessage.style.display = 'block';
+          retakeMessage.textContent = 'Anda sudah menyelesaikan kuis ini. Nilai Anda sudah tersimpan.';
+          
+          window.scrollTo({
+              top: quizResultsDiv.offsetTop,
+              behavior: 'smooth'
+          });
+      });
+    });
+  </script>
+</body>
+</html>
